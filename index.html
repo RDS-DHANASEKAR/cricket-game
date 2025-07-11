@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Tournament Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><button onclick="showScreen('main-menu')">Home</button></li>
+            <li><button onclick="showScreen('about')">About</button></li>
+            <li><button onclick="showScreen('rules')">Rules</button></li>
+            <li><button onclick="showScreen('how-to-play')">How to Play</button></li>
+            <li><button onclick="showScreen('keys')">Keys and Shortcuts</button></li>
+        </ul>
+    </nav>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🏏 Cricket Tournament</h1>
+        </header>
+
+        <main class="game-main">
+            <!-- Main Menu Screen -->
+            <div id="main-menu" class="screen active">
+                <h2>Welcome to Cricket Tournament!</h2>
+                <div class="menu-options">
+                    <button id="quick-match-btn" class="btn">Quick Match</button>
+                    <button id="tournament-btn" class="btn">Full Tournament</button>
+                </div>
+            </div>
+
+            <!-- Team Selection Screen -->
+            <div id="team-selection" class="screen">
+                <h2>Select Your Team</h2>
+                <div class="teams-grid" id="teams-container"></div>
+                <button id="back-to-menu" class="btn back-btn">Back to Menu</button>
+            </div>
+
+            <!-- Opponent Selection Screen (Quick Match) -->
+            <div id="opponent-selection" class="screen">
+                <h2>Select Opponent Team</h2>
+                <div class="teams-grid" id="opponents-container"></div>
+                <button id="back-to-teams" class="btn back-btn">Back to Teams</button>
+            </div>
+
+            <!-- Match Setup Screen -->
+            <div id="match-setup" class="screen">
+                <h2 id="match-title">Match Setup</h2>
+                <div class="match-info">
+                    <div class="team-display">
+                        <div class="team-card" id="user-team-card">
+                            <h3>Your Team</h3>
+                            <div class="team-logo" id="user-team-logo"></div>
+                            <p id="user-team-name">-</p>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team-card" id="opponent-team-card">
+                            <h3>Opponent</h3>
+                            <div class="team-logo" id="opponent-team-logo"></div>
+                            <p id="opponent-team-name">-</p>
+                        </div>
+                    </div>
+                    <div class="overs-selection">
+                        <label for="overs-input">Select Number of Overs:</label>
+                        <input type="number" id="overs-input" min="1" max="20" value="1">
+                    </div>
+                    <button id="start-match-btn" class="btn">Start Match</button>
+                </div>
+                <button id="back-to-opponents" class="btn back-btn">Back to Opponents</button>
+            </div>
+
+            <!-- Toss Screen -->
+            <div id="toss-screen" class="screen">
+                <h2>Toss Time!</h2>
+                <div class="toss-container">
+                    <!-- Odd/Even Selection -->
+                    <div class="toss-options">
+                        <p>Choose Odd or Even:</p>
+                        <div class="choice-buttons">
+                            <button class="toss-choice-btn" data-choice="odd">Odd</button>
+                            <button class="toss-choice-btn" data-choice="even">Even</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Number Selection (hidden initially) -->
+                    <div class="toss-number-selection hidden">
+                        <p>Enter a number between 1-6:</p>
+                        <div class="number-buttons">
+                            <button class="number-btn" data-number="1">1</button>
+                            <button class="number-btn" data-number="2">2</button>
+                            <button class="number-btn" data-number="3">3</button>
+                            <button class="number-btn" data-number="4">4</button>
+                            <button class="number-btn" data-number="5">5</button>
+                            <button class="number-btn" data-number="6">6</button>
+                        </div>
+                    </div>
+                    
+                    <!--Toss Result (hidden initially) -->
+                    <div id="toss-result" class="hidden">
+                        <!-- Result will be inserted here -->
+                    </div>
+                    
+                    <!-- Decision (hidden initially) -->
+                    <div id="toss-decision" class="hidden">
+                        <p id="decision-message"></p>
+                        <div class="decision-buttons hidden" id="user-decision">
+                            <button class="decision-btn" data-decision="bat">Bat</button>
+                            <button class="decision-btn" data-decision="bowl">Bowl</button>
+                        </div>
+                        <button class="btn hidden" id="continue-after-toss">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Play Screen -->
+            <div id="match-play" class="screen">
+                <h2 id="innings-title">1st Innings</h2>
+                <div class="scoreboard">
+                    <div class="batting-team">
+                        <h3 id="current-batting-team">-</h3>
+                        <div class="score-display">
+                            <span id="runs">0</span>
+                            <span>/</span>
+                            <span id="wickets">0</span>
+                        </div>
+                    </div>
+                    <div class="overs-display">
+                        <p>Overs: <span id="overs">0.0</span></p>
+                        <p>Target: <span id="target">-</span></p>
+                    </div>
+                </div>
+                <div class="match-controls">
+                    <p>Enter your run (1-6):</p>
+                    <div class="run-buttons">
+                        <button class="run-btn" data-run="1">1</button>
+                        <button class="run-btn" data-run="2">2</button>
+                        <button class="run-btn" data-run="3">3</button>
+                        <button class="run-btn" data-run="4">4</button>
+                        <button class="run-btn" data-run="5">5</button>
+                        <button class="run-btn" data-run="6">6</button>
+                    </div>
+                    <div id="ball-result"></div>
+                </div>
+                <div id="innings-summary" class="hidden"></div>
+                <div id="next-innings-btn" class="hidden">
+                    <button class="btn" id="start-next-innings">Start Next Innings</button>
+                </div>
+            </div>
+            <!-- Match Result Screen -->
+            <div id="match-result" class="screen">
+                <h2>Match Result</h2>
+                <div id="result-display"></div>
+                <div class="result-options">
+                    <button id="play-again-btn" class="btn">Play Again</button>
+                    <button id="maia" class="btn">Back to Menu</button>
+                </div>
+                
+            </div>
+
+            <!-- Tournament Progress Screen -->
+            <div id="tournament-progress" class="screen">
+                <h2>Tournament Progress</h2>
+                <div class="points-table">
+                    <h3>Points Table</h3>
+                    <table id="points-table">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Matches</th>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="points-table-body"></tbody>
+                    </table>
+                </div>
+                <div id="next-match-btn">
+                    <button class="btn" id="continue-tournament">Continue Tournament</button>
+                </div>
+            </div>
+
+            <!-- How to Play Screen -->
+            <div id="how-to-play" class="screen">
+                <h2>How to Play</h2>
+                <div class="instructions">
+                    <h3>Game Rules:</h3>
+                    <ul>
+                        <li>Choose to play a Quick Match or Full Tournament</li>
+                        <li>Select your team and opponent (for Quick Match)</li>
+                        <li>Decide the number of overs (1-20)</li>
+                        <li>Participate in the toss by choosing odd/even and entering a number</li>
+                        <li>If you win the toss, choose to bat or bowl first</li>
+                        <li>During the match, select a run (1-6) when it's your turn</li>
+                        <li>If your number matches the computer's, it's a wicket!</li>
+                        <li>In a tournament, the top 4 teams advance to playoffs</li>
+                    </ul>
+                    <h3>Controls:</h3>
+                    <ul>
+                        <li>Use mouse to click buttons</li>
+                        <li>Number keys 1-6 can be used during match play</li>
+                    </ul>
+                </div>
+                <button id="back-from-instructions" class="btn back-btn">Back to Menu</button>
+            </div>
+
+            <!-- About Screen -->
+            <div id="about" class="screen">
+                <h2>About Cricket Tournament Game</h2>
+                <div class="content-card">
+                    <p>Welcome to Cricket Tournament - the ultimate virtual cricket experience!</p>
+                    <p>This game was developed by cricket enthusiasts to bring the excitement of IPL to your browser.</p>
+                    <p>Features:</p>
+                    <ul>
+                        <li>Play quick matches or full tournaments</li>
+                        <li>10 authentic teams with logos and colors</li>
+                        <li>Toss simulation with odd/even logic</li>
+                        <li>Full tournament with playoffs system</li>
+                        <li>Interactive match gameplay</li>
+                    </ul>
+                </div>
+                <button onclick="showScreen('main-menu')" class="btn back-btn">Back to Menu</button>
+            </div>
+
+            <!-- Rules Screen -->
+            <div id="rules" class="screen">
+                <h2>Game Rules</h2>
+                <div class="content-card">
+                    <h3>Basic Rules</h3>
+                    <ul>
+                        <li>Each match consists of two innings (batting and bowling)</li>
+                        <li>You can choose to play 1-20 overs per innings</li>
+                        <li>Win the toss to decide whether to bat or bowl first</li>
+                        <li>When batting, select runs from 1-6</li>
+                        <li>If your selected number matches the computer's, you're out!</li>
+                    </ul>
+                    
+                    <h3>Tournament Rules</h3>
+                    <ul>
+                        <li>Round-robin league stage where all teams play each other</li>
+                        <li>Top 4 teams qualify for playoffs</li>
+                        <li>Playoffs follow IPL format: Qualifiers and Eliminator</li>
+                        <li>2 points for a win, 0 for a loss</li>
+                    </ul>
+                </div>
+                <button onclick="showScreen('main-menu')" class="btn back-btn">Back to Menu</button>
+            </div>
+
+            <!-- Keys and Shortcuts Screen -->
+            <div id="keys" class="screen">
+                <h2>Controls and Shortcuts</h2>
+                <div class="content-card">
+                    <h3>Mouse Controls</h3>
+                    <ul>
+                        <li>Click buttons to navigate menus</li>
+                        <li>Click run buttons (1-6) during match play</li>
+                        <li>Click toss options during the toss sequence</li>
+                    </ul>
+                    
+                    <h3>Keyboard Shortcuts</h3>
+                    <ul>
+                        <li><strong>1-6 keys:</strong> Select runs during match play</li>
+                        <li><strong>Enter:</strong> Confirm selections</li>
+                        <li><strong>Escape:</strong> Back to previous screen</li>
+                    </ul>
+                </div>
+                <button onclick="showScreen('main-menu')" class="btn back-btn">Back to Menu</button>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <p>Hand Cricket Tournament Game - Created with HTML, CSS & JavaScript</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
